@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Home Improvement Market Analysis — Tommy Nguyen</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1A3A6B;--gold:#E8A500;--light-blue:#F0F4FA;--light-gold:#FFD055;--cream:#FFFDF0;--dark:#252423;--code-bg:#1e2a3a;--code-text:#c9d1d9}
+body{font-family:'Segoe UI',Calibri,Arial,sans-serif;color:var(--dark);line-height:1.7;background:#fff}
+code,pre,.code-block{font-family:'Cascadia Code','Consolas',monospace}
+#progress-bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--light-gold));width:0;z-index:9999;transition:width .15s}
+#toc{position:fixed;right:24px;top:80px;width:200px;font-size:12px;z-index:100}
+#toc ul{list-style:none;border-left:2px solid var(--light-blue)}
+#toc li{padding:4px 0 4px 14px;cursor:pointer;color:#666;transition:all .2s}
+#toc li:hover{color:var(--navy)}
+#toc li.active{color:var(--navy);font-weight:700;border-left:3px solid var(--gold);margin-left:-2px}
+@media(max-width:1100px){#toc{display:none}}
+.wrapper{max-width:820px;margin:0 auto;padding:40px 48px}
+@media(max-width:860px){.wrapper{padding:24px 18px}}
+.cover{background:var(--navy);position:relative;overflow:hidden;padding:80px 48px 60px;text-align:center;color:#fff}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(232,165,0,.18),transparent 70%);z-index:1}
+.cover::after{content:'';position:absolute;inset:0;opacity:.12;background:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:0}
+.cover>*{position:relative;z-index:2}
+.cover h1{font-size:32px;font-weight:800;margin-bottom:8px}
+.cover h1::after{content:'';display:block;margin:12px auto 0;height:3px;background:var(--gold);animation:underline-grow 1s ease-out forwards;width:0}
+@keyframes underline-grow{to{width:60%}}
+.cover .subtitle{color:var(--gold);font-size:16px;margin-bottom:4px}
+.cover .meta{color:rgba(255,255,255,.6);font-size:13px}
+.stat-row{display:flex;gap:16px;margin:32px 0;flex-wrap:wrap}
+.stat{flex:1;min-width:140px;background:var(--light-blue);border-radius:8px;padding:18px;text-align:center;border-top:3px solid transparent;transition:all .25s}
+.stat:hover{border-top-color:var(--gold);transform:scale(1.04);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.stat .value{font-size:20pt;font-weight:700;color:var(--navy)}
+.stat .label{font-size:9pt;color:#888;margin-top:2px}
+.guide-box{background:var(--light-blue);border:2px solid var(--navy);border-radius:8px;padding:24px 28px;margin:32px 0}
+.guide-box h3{text-transform:uppercase;color:var(--navy);font-size:12px;letter-spacing:1.5px;margin-bottom:10px}
+.guide-box p,.guide-box li{font-size:14px;color:#444}
+.guide-box ul{padding-left:18px;margin-top:6px}
+.guide-box li{margin-bottom:4px}
+h2{font-size:16pt;font-weight:700;color:var(--navy);border-bottom:3px solid var(--gold);padding-bottom:8px;margin:48px 0 20px}
+.research-q{border:2px solid var(--navy);border-radius:8px;padding:18px 22px;margin:16px 0 20px;background:#fff}
+.research-q .rq-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--navy);font-weight:700;margin-bottom:4px}
+.research-q .rq-label::before{content:'? ';font-size:14px}
+.research-q .rq-text{font-style:italic;font-size:15px;color:var(--dark)}
+.code-ref{display:inline-block;background:var(--navy);color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px;font-family:'Cascadia Code','Consolas',monospace}
+p{margin:12px 0;font-size:15px}
+.code-block{background:var(--code-bg);color:var(--code-text);border-radius:8px;padding:20px 24px;margin:16px 0;overflow-x:auto;font-size:13px;line-height:1.6}
+.code-block .kw{color:#ff7b72}.code-block .fn{color:#d2a8ff}.code-block .str{color:#a5d6ff}.code-block .cm{color:#8b949e;font-style:italic}.code-block .num{color:#79c0ff}
+.finding{background:var(--cream);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:18px 22px;margin:20px 0}
+.finding .finding-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:700;margin-bottom:6px}
+.finding p{margin:4px 0;font-size:14px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.finding.reveal.visible{border-left-width:4px;animation:border-grow .4s ease forwards}
+@keyframes border-grow{from{border-left-width:0}to{border-left-width:4px}}
+.footer{text-align:center;padding:48px 20px;color:#888;font-size:13px;border-top:1px solid #eee;margin-top:48px}
+.footer a{color:var(--navy)}
+@media print{#progress-bar,#toc{display:none}.reveal{opacity:1!important;transform:none!important}.cover{break-after:page}}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<div style="max-width:900px;margin:20px auto;padding:20px 30px;background:#f0f4f8;border-radius:8px;text-align:center;">
+    <h3 style="color:#0f3460;margin-bottom:12px;font-size:1rem;">Download Dataset</h3>
+    <a href="https://github.com/Tommy-Nguyen-Stonera/python-home-furnishings-market/raw/main/marketing_sample_for_amazon_com-amazon_home_improvement_data__20200101_20200331__5k_data.ldjson" download style="display:inline-block;margin:5px 10px;padding:8px 20px;background:#0f3460;color:white;border-radius:4px;text-decoration:none;font-size:0.85rem;">amazon_home_improvement.ldjson</a>
+</div>
+
+
+<nav id="toc"><ul>
+<li data-section="overview">Overview</li>
+<li data-section="data-cleaning">Data Cleaning</li>
+<li data-section="pricing">Pricing Landscape</li>
+<li data-section="brands">Brand Analysis</li>
+<li data-section="discounts">Discount Effectiveness</li>
+<li data-section="ratings">Rating Analysis</li>
+<li data-section="prime">The Prime Effect</li>
+<li data-section="sellers">Seller Concentration</li>
+<li data-section="process">Thinking Process</li>
+</ul></nav>
+
+<div class="cover">
+<h1>Amazon Home Improvement Market Analysis</h1>
+<p class="subtitle">Pricing, Brands &amp; Marketplace Dynamics — 5,000 Products</p>
+<p class="meta">Tommy Nguyen &middot; Amazon India Q1 2020 &middot; Python &middot; Pandas &middot; Matplotlib</p>
+</div>
+
+<div class="wrapper">
+
+<div class="stat-row reveal">
+<div class="stat"><div class="value">5,000</div><div class="label">Products Analysed</div></div>
+<div class="stat"><div class="value">145</div><div class="label">Sub-Categories</div></div>
+<div class="stat"><div class="value">42%</div><div class="label">Average Discount</div></div>
+<div class="stat"><div class="value">4.13</div><div class="label">Average Rating (out of 5)</div></div>
+</div>
+
+<div class="guide-box">
+<h3>How to Read This Report</h3>
+<p>Working in showroom sales, I see how online marketplaces reshape how customers shop for home improvement products. This report analyses 5,000 Amazon India Home Improvement products (Q1 2020) to understand pricing dynamics, brand concentration, and marketplace structure.</p>
+<ul>
+<li><strong>Research Question</strong> boxes frame each business problem from a retail perspective</li>
+<li><strong>Code blocks</strong> show the actual Python (Pandas, Matplotlib, Seaborn) used</li>
+<li><strong>Key Finding</strong> cards summarise the insight with industry context</li>
+<li>Prices are in INR (Indian Rupees). At Q1 2020 rates, INR 1,000 &#8776; AUD $19</li>
+</ul>
+</div>
+
+<!-- Section 1 -->
+<h2 id="overview">Project Overview &amp; Motivation</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">What can marketplace data tell a physical retail salesperson about online pricing, brand strategy, and customer behaviour?</div>
+<span class="code-ref">analysis.py</span>
+</div>
+
+<p>A customer walking into my showroom has already checked prices online. They know the going rate. Understanding how online marketplaces structure pricing and promotions helps me have better conversations on the floor. I wanted to see the dynamics from the other side — what does the marketplace actually look like from a data perspective?</p>
+
+<p>The dataset covers Amazon India's Home Improvement category — hardware, tools, kitchen fittings, bathroom accessories. The kinds of products that sit in the same competitive space as what I sell in-store. While the prices are in INR and the brands skew Indian, the market dynamics — discount patterns, brand concentration, the Prime effect, seller fragmentation — mirror what I see in Australian retail every day.</p>
+
+<div class="code-block">
+<span class="cm"># Load line-delimited JSON (~5K products)</span><br>
+df = pd.<span class="fn">read_json</span>(<span class="str">"marketing_sample_...5k_data.ldjson"</span>, lines=<span class="kw">True</span>)<br>
+<span class="fn">print</span>(<span class="str">f"Raw dataset: {df.shape[0]:,} products, {df.shape[1]} columns"</span>)<br>
+<span class="cm"># 5,000 products, multiple columns needing cleanup</span>
+</div>
+
+<!-- Section 2 -->
+<h2 id="data-cleaning">Data Cleaning &amp; Wrangling</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">How messy is real marketplace data, and what decisions did cleanup force me to make?</div>
+<span class="code-ref">analysis.py — Data Cleaning</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Price: force numeric (some rows had currency symbols)</span><br>
+df[<span class="str">"sales_price"</span>] = pd.<span class="fn">to_numeric</span>(df[<span class="str">"sales_price"</span>], errors=<span class="str">"coerce"</span>)<br><br>
+<span class="cm"># Discount: strip % symbol, convert to float</span><br>
+df[<span class="str">"discount_pct"</span>] = (<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df[<span class="str">"discount_percentage"</span>].<span class="fn">astype</span>(<span class="fn">str</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">str.replace</span>(<span class="str">"%"</span>, <span class="str">""</span>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">pipe</span>(pd.to_numeric, errors=<span class="str">"coerce"</span>)<br>
+)<br><br>
+<span class="cm"># Category: extract from nested dict</span><br>
+<span class="kw">def</span> <span class="fn">extract_subcategory</span>(val):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if not</span> <span class="fn">isinstance</span>(val, <span class="fn">dict</span>): <span class="kw">return</span> <span class="str">"Uncategorised"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;keys = [k <span class="kw">for</span> k <span class="kw">in</span> val.keys() <span class="kw">if</span> k != <span class="str">"HomeImprovement"</span>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> keys[<span class="num">0</span>] <span class="kw">if</span> keys <span class="kw">else</span> <span class="str">"General Home Improvement"</span>
+</div>
+
+<p>The dataset arrived as line-delimited JSON with prices stored as strings (including currency symbols), discounts as percentage strings, and product categories buried in nested dictionaries. About 8% of products had missing discount percentages, and roughly 200 had no ratings at all.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Where I Got Stuck</div>
+<p>The category extraction was the most frustrating part. The <code>parent___child_category__all</code> column contained nested Python dictionaries with varying depth. My first approach — <code>df["category"].str.get("child")</code> — failed because the column contained actual dict objects, not JSON strings. Pandas' string accessor does not work on dicts. I had to write a custom function and use <code>.apply()</code>. The deeper issue was that the nesting was inconsistent: some products had three levels of categorisation, others had one. I ended up grabbing any key that was not "HomeImprovement" and using it as the subcategory. Imperfect, but functional for 145 categories.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">Key Decision</div>
+<p>I kept products with missing discounts (they likely were not discounted) but excluded unrated products from the rating analysis. A product with zero ratings is fundamentally different from one rated 1 star. That decision affected the rating distribution — including zero-rating products would have pulled the average down and created a different story. Every cleaning decision is an analytical decision.</p>
+</div>
+
+<!-- Section 3 -->
+<h2 id="pricing">Pricing Landscape</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">How are products priced across sub-categories? Where are the premium vs value segments, and how wide is the spread?</div>
+<span class="code-ref">analysis.py — Chart 1</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Top 12 categories, capped at 99th percentile for outliers</span><br>
+top_cats = df[<span class="str">"category"</span>].<span class="fn">value_counts</span>().<span class="fn">head</span>(<span class="num">12</span>).index<br>
+df_top = df[df[<span class="str">"category"</span>].<span class="fn">isin</span>(top_cats)]<br>
+price_cap = df_top[<span class="str">"sales_price"</span>].<span class="fn">quantile</span>(<span class="num">0.99</span>)<br>
+df_top[<span class="str">"price_capped"</span>] = df_top[<span class="str">"sales_price"</span>].<span class="fn">clip</span>(upper=price_cap)<br>
+sns.<span class="fn">boxplot</span>(data=df_top, y=<span class="str">"category"</span>, x=<span class="str">"price_capped"</span>, order=order)
+</div>
+
+<p>5,000 products span 145 sub-categories with a median price of INR 899 (roughly AUD $16). Price distributions are heavily right-skewed — most products cluster under INR 2,000, but outliers stretch above INR 50,000. This matches what I see in building materials: high-volume commodity items with a thin tail of specialist products.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>Categories like Power &amp; Hand Tools and Kitchen &amp; Bath Fixtures show the widest price spread, reflecting the spectrum from budget DIY to professional-grade. The width of the box tells me how much pricing flexibility exists in each category — tight clusters mean commodity, wide spreads mean segmentation opportunity.</p>
+</div>
+
+<!-- Section 4 -->
+<h2 id="brands">Brand Concentration Analysis</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">Which brands dominate by volume, and do they maintain quality? Is market leadership earned through catalogue size or reputation?</div>
+<span class="code-ref">analysis.py — Chart 2</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Dual-axis: product count (bars) vs avg rating (line)</span><br>
+brand_stats = df.<span class="fn">groupby</span>(<span class="str">"brand"</span>).<span class="fn">agg</span>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;product_count=(<span class="str">"brand"</span>, <span class="str">"size"</span>),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;avg_rating=(<span class="str">"rating"</span>, <span class="str">"mean"</span>)<br>
+).<span class="fn">sort_values</span>(<span class="str">"product_count"</span>, ascending=<span class="kw">False</span>).<span class="fn">head</span>(<span class="num">15</span>)<br><br>
+ax1.<span class="fn">bar</span>(x, brand_stats[<span class="str">"product_count"</span>])<br>
+ax2 = ax1.<span class="fn">twinx</span>()<br>
+ax2.<span class="fn">plot</span>(x, brand_stats[<span class="str">"avg_rating"</span>], marker=<span class="str">"o"</span>)
+</div>
+
+<p>The top brand by volume, uxcell, lists 168 products — but that is only 3.4% of the total catalogue. No single brand dominates. Quality leaders are different from volume leaders: Stanley and Taparia rate highest among the top 15 despite listing fewer products.</p>
+
+<div class="stat-row reveal">
+<div class="stat"><div class="value">3.4%</div><div class="label">Top Brand Market Share</div></div>
+<div class="stat"><div class="value">168</div><div class="label">Products (uxcell, #1 by volume)</div></div>
+<div class="stat"><div class="value">2,000+</div><div class="label">Unique Brands</div></div>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>The market is incredibly fragmented. In physical retail, a few major brands command significant shelf space. Online, the "shelf" is infinite, so the barrier to listing is near zero. The long tail is enormous: hundreds of brands with fewer than 5 listings each. Volume does not guarantee reputation — Stanley and Taparia earn higher ratings with fewer products.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">What I Expected vs What I Found</div>
+<p>I expected big brands to dominate — like how Makita, Bosch, and DeWalt own the tool section in any physical store. Online, the top brand holds barely 3%. This was so different from physical retail that I had to ask why. The answer is structural: in a showroom, shelf space is finite, so each brand has real power. Online, the constraint is discoverability, not space. But fragmentation creates its own problem — for safety-critical categories like power tools, how does a buyer distinguish between a reputable brand and an unknown? Name recognition still matters for trust-dependent purchases.</p>
+</div>
+
+<!-- Section 5 -->
+<h2 id="discounts">Discount Effectiveness</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">Do higher discounts drive more customer engagement? Is there a ceiling beyond which deeper discounts stop working?</div>
+<span class="code-ref">analysis.py — Chart 3</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Bin discounts for analysis</span><br>
+df_disc[<span class="str">"discount_bin"</span>] = pd.<span class="fn">cut</span>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;df_disc[<span class="str">"discount_pct"</span>],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bins=[<span class="num">0</span>, <span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">40</span>, <span class="num">50</span>, <span class="num">60</span>, <span class="num">70</span>, <span class="num">80</span>, <span class="num">100</span>],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;labels=[<span class="str">"1-10%"</span>, <span class="str">"11-20%"</span>, ..., <span class="str">"81-100%"</span>]<br>
+)<br>
+median_reviews = df_disc.<span class="fn">groupby</span>(<span class="str">"discount_bin"</span>, observed=<span class="kw">True</span>)[<span class="str">"reviews"</span>].<span class="fn">median</span>()
+</div>
+
+<p>The average discount is 42% — heavy discounting is standard, not exceptional. Products with 50%+ discounts attract 35% more reviews (median 23 vs 17 for lower discounts). But the relationship is not linear. Beyond roughly 60% off, engagement plateaus.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>Discounts work, but there is a ceiling. The 50–60% range is the sweet spot for driving engagement. Beyond 60%, buyers appear to question either the original price or the product quality. This aligns with what I see in-store: customers become suspicious of discounts that look too steep. The 42% average suggests "discount" is partly theatrical — similar to perpetual "sale" pricing in Australian retail.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">The Pivot Moment</div>
+<p>I initially assumed a straightforward linear relationship: bigger discount equals more sales. The data partially confirmed this — up to a point. When I pushed the analysis past 60%, engagement plateaued. That made me rethink the question entirely. The issue is not "do discounts work?" but "where is the ceiling?" And the ceiling is lower than I expected. This changed the chart from a simple bar plot to a dual-panel view: the bar chart shows the pattern, and the scatter shows the noisy reality underneath. The scatter uses a log scale on the y-axis because review counts are heavily skewed — a detail I only caught after my first version produced a chart with 90% of the dots crushed into the bottom. Matplotlib's default linear scale was useless here.</p>
+</div>
+
+<!-- Section 6 -->
+<h2 id="ratings">Rating Distribution &amp; Quality Signals</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">What does the rating distribution look like across the marketplace? Which categories earn the highest customer trust?</div>
+<span class="code-ref">analysis.py — Chart 4</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Dual panel: distribution + category averages</span><br>
+df[<span class="str">"rating"</span>].<span class="fn">dropna</span>().<span class="fn">hist</span>(bins=<span class="num">20</span>, color=sns.<span class="fn">color_palette</span>(<span class="str">"muted"</span>)[<span class="num">4</span>])<br>
+ax1.<span class="fn">axvline</span>(df[<span class="str">"rating"</span>].<span class="fn">mean</span>(), color=<span class="str">"red"</span>, linestyle=<span class="str">"--"</span>)<br><br>
+cat_rating = df[df[<span class="str">"category"</span>].<span class="fn">isin</span>(top_cats)]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">groupby</span>(<span class="str">"category"</span>)[<span class="str">"rating"</span>].<span class="fn">mean</span>().<span class="fn">sort_values</span>()
+</div>
+
+<p>Average rating: 4.13 out of 5.0. The quality bar is high — low-rated products get buried by the algorithm quickly. The distribution is left-skewed: most products sit between 3.5 and 4.5. Anything below 3.0 is functionally invisible on the platform.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>The rating floor is 3.5, not 3.0. Products below 3.5 stars are so rare in this dataset that they effectively do not exist in the marketplace. The algorithm and customer behaviour create a survival bias where only well-rated products remain visible. Safety &amp; Security and Kitchen &amp; Bath Fixtures rate highest, suggesting customers in these categories are more satisfied — or more selective about what they buy.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">Where I Got Stuck</div>
+<p>The histogram initially looked fine with 30 bins, but the distribution had a suspicious spike at exactly 4.0. I spent time investigating whether Amazon rounds ratings or if this was a data artefact. It turns out many products with few reviews naturally cluster at round numbers (one 4-star review = exactly 4.0). Reducing to 20 bins smoothed this artefact without hiding the overall shape. The lesson: bin count in histograms is an editorial choice, and the default is rarely the right one.</p>
+</div>
+
+<!-- Section 7 -->
+<h2 id="prime">The Prime Effect</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">Do Prime (FBA) products perform differently on price or quality? What does the fulfilment choice tell us about seller strategy?</div>
+<span class="code-ref">analysis.py — Chart 5</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Prime flag from Y/N column</span><br>
+df[<span class="str">"is_prime"</span>] = df[<span class="str">"amazon_prime__y_or_n"</span>].<span class="fn">str.upper</span>() == <span class="str">"Y"</span><br><br>
+<span class="cm"># Compare median/mean prices</span><br>
+prime_prices = df[df[<span class="str">"is_prime"</span>]][<span class="str">"sales_price"</span>]<br>
+non_prime_prices = df[~df[<span class="str">"is_prime"</span>]][<span class="str">"sales_price"</span>]<br>
+<span class="cm"># Prime avg: INR 869 vs Non-Prime avg: INR 2,488</span>
+</div>
+
+<p>Prime products average INR 869 vs INR 2,488 for non-Prime — FBA sellers compete aggressively on price, consistent with a volume-driven strategy. Counterintuitively, non-Prime products rate slightly higher (4.18 vs 4.06).</p>
+
+<div class="stat-row reveal">
+<div class="stat"><div class="value">INR 869</div><div class="label">Prime Average Price</div></div>
+<div class="stat"><div class="value">INR 2,488</div><div class="label">Non-Prime Average Price</div></div>
+<div class="stat"><div class="value">4.06</div><div class="label">Prime Avg Rating</div></div>
+<div class="stat"><div class="value">4.18</div><div class="label">Non-Prime Avg Rating</div></div>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>Prime is a price-competition channel. Non-Prime is where margin and specialisation live. This mirrors the in-store vs online split I see in Australian retail: the warehouse store competes on price and convenience, the specialist showroom competes on expertise and quality. The slight rating advantage for non-Prime may reflect better-matched buyer expectations rather than objectively better products.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">What I Expected vs What I Found</div>
+<p>I assumed Prime = better experience = higher ratings. The opposite is true. Before concluding that non-Prime is "better quality," I had to consider whether the rating difference is driven by product mix rather than fulfilment type. Prime attracts lower-priced commodity items where buyers have low expectations. Non-Prime attracts specialist items where the buyer has already researched and committed. If non-Prime buyers are more intentional, their higher ratings may reflect better-matched expectations rather than better products. The lesson: segment-level averages can mislead if the segments contain fundamentally different product mixes.</p>
+</div>
+
+<!-- Section 8 -->
+<h2 id="sellers">Seller Market Concentration</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">How concentrated is seller ownership in this market? Is it controlled by a few large players, or is it open competition?</div>
+<span class="code-ref">analysis.py — Chart 6</span>
+</div>
+
+<div class="code-block">
+<span class="cm"># Market concentration analysis</span><br>
+seller_counts = df[<span class="str">"seller_name"</span>].<span class="fn">value_counts</span>()<br>
+top_10_sellers = seller_counts.<span class="fn">head</span>(<span class="num">10</span>)<br>
+top10_pct = top_10_sellers.<span class="fn">sum</span>() / <span class="fn">len</span>(df) * <span class="num">100</span><br>
+<span class="cm"># Top 10 sellers control just 15.8% of listings</span><br>
+<span class="cm"># Across 2,000+ unique sellers</span>
+</div>
+
+<p>Top 10 sellers control just 15.8% of listings across a pool of 2,000+ unique sellers. This is a highly fragmented marketplace with low barriers to entry. No single seller has meaningful market power.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Key Finding</div>
+<p>At 15.8% concentration, this market is wide open. Compare that to physical retail where the top 3–4 distributors might control 60%+ of supply. Online marketplaces democratise access — but they also commoditise it. Competition is broad but shallow: many sellers with small catalogues rather than a few giants blocking entry.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">Business Implication</div>
+<p>For someone considering entering this market, the data suggests low barriers to entry but fierce price competition (especially in Prime). The winning strategy appears to be niche specialisation with strong ratings, not catalogue breadth. From my years in building materials, I know the same dynamic plays out in physical wholesale: the generalist competes on price, the specialist competes on expertise and relationship. The marketplace data confirms this pattern extends to online retail.</p>
+</div>
+
+<!-- Section 9 -->
+<h2 id="process">My Thinking Process &amp; Reflections</h2>
+
+<div class="research-q">
+<div class="rq-label">Research Question</div>
+<div class="rq-text">What went wrong, what changed my approach mid-analysis, and what would I do differently with more time?</div>
+<span class="code-ref">Retrospective</span>
+</div>
+
+<p><strong>The biggest Pandas challenge:</strong> The <code>.pipe()</code> method for chaining transformations was new to me. I started with a multi-line approach — <code>df["discount_percentage"].astype(str)</code>, then <code>.str.replace("%", "")</code>, then <code>pd.to_numeric()</code>. Chaining these with <code>.pipe()</code> was cleaner, but I initially got confused about which function signature <code>.pipe()</code> expects. The key insight: <code>.pipe(func, *args)</code> passes the Series as the first argument to <code>func</code>. Once I understood that, the cleanup code became a single readable chain instead of three separate assignments.</p>
+
+<p><strong>Matplotlib's default colours made the charts unreadable.</strong> The default colour cycle worked fine for the first few charts, but the dual-axis brand chart (bars + line) needed manual colour selection. Using <code>sns.color_palette("muted")[0]</code> for bars and <code>[3]</code> for the line gave enough contrast. I also had to set <code>ylim(2.5, 5.2)</code> on the rating axis — without it, Matplotlib auto-scaled to the full 0–5 range, which compressed the actual variation into a narrow band at the top and made all brands look identical.</p>
+
+<p><strong>The scatter plot that nearly ruined my discount analysis:</strong> My first version of the discount-vs-reviews scatter had 4,000+ dots on a linear scale. It was an unreadable blob with a few outliers. I tried reducing alpha to 0.1, which helped but still hid the pattern. The real fix was switching to a log scale on the y-axis (<code>ax.set_yscale("log")</code>) and sampling 1,000 points (<code>df.sample(1000, random_state=42)</code>). The log scale spread out the compressed points, and sampling reduced overplotting. But I had to set <code>random_state</code> to make the chart reproducible — without it, every run produced a different-looking scatter, which made debugging impossible.</p>
+
+<div class="finding reveal">
+<div class="finding-label">Honest Self-Critique</div>
+<p>Looking back, I should have explored the "best seller" tag more thoroughly — the dataset includes a best_seller flag that I mentioned but did not fully analyse. What separates best sellers from the rest? Is it price, rating, discount, brand, or some combination? That analysis would have been the most commercially actionable part of the report. I also should have attempted a time-series view. The data covers Q1 2020 — three months. Even a weekly price trend analysis could have revealed promotional cycles and seasonal patterns that the static snapshot misses. Finally, review sentiment analysis using NLP would add depth: review counts tell me engagement volume, but not whether customers are praising or complaining.</p>
+</div>
+
+<div class="finding reveal">
+<div class="finding-label">What I Would Investigate Next</div>
+<p><strong>Cross-market comparison:</strong> Running the same analysis on Amazon Australia or US data would test whether these patterns are India-specific or universal. <strong>Price elasticity modelling:</strong> With granular sales data, estimate how sensitive demand is to price changes per category. <strong>Best seller deep-dive:</strong> What separates the products that earn the best seller tag? <strong>Review text analysis:</strong> NLP on review content could surface specific product strengths and complaints that ratings alone cannot reveal.</p>
+</div>
+
+</div>
+
+<div class="footer">
+<strong>Tommy Nguyen</strong> &middot; <a href="https://github.com/Tommy-Nguyen-Stonera">GitHub</a> &middot; <a href="https://tommy-nguyen-stonera.vercel.app">Portfolio</a><br>
+Data: Bright Data — Amazon Home Improvement Dataset (Q1 2020) &middot; Tools: Python, Pandas, Matplotlib, Seaborn, NumPy<br>
+AI Tools: AI coding assistants used for debugging and code suggestions. Analysis and interpretations are my own.
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{const s=document.documentElement,p=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;document.getElementById('progress-bar').style.width=p+'%'});
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const tocItems=document.querySelectorAll('#toc li');
+const sections=Array.from(tocItems).map(li=>document.getElementById(li.dataset.section)).filter(Boolean);
+window.addEventListener('scroll',()=>{let current='';sections.forEach(s=>{if(s.getBoundingClientRect().top<=120)current=s.id});tocItems.forEach(li=>{li.classList.toggle('active',li.dataset.section===current)})});
+tocItems.forEach(li=>li.addEventListener('click',()=>{const el=document.getElementById(li.dataset.section);if(el)el.scrollIntoView({behavior:'smooth'})}));
+</script>
+
+
+
+</body>
+</html>
