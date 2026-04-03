@@ -60,11 +60,11 @@ p{margin:12px 0;font-size:15px}
 </head>
 <body>
 <div id="progress-bar"></div>
-<div style="max-width:900px;margin:20px auto;padding:20px 30px;background:#f0f4f8;border-radius:8px;text-align:center;">
-    <h3 style="color:#0f3460;margin-bottom:12px;font-size:1rem;">Download Dataset</h3>
-    <a href="https://github.com/Tommy-Nguyen-Stonera/python-home-furnishings-market/raw/main/marketing_sample_for_amazon_com-amazon_home_improvement_data__20200101_20200331__5k_data.ldjson" download style="display:inline-block;margin:5px 10px;padding:8px 20px;background:#0f3460;color:white;border-radius:4px;text-decoration:none;font-size:0.85rem;">amazon_home_improvement.ldjson</a>
+<div style="background:#F0F4FA;border:1px solid #C5D4E8;border-radius:8px;padding:16px 20px;margin-bottom:32px;max-width:900px;margin-left:auto;margin-right:auto;">
+    <div style="font-size:10pt;font-weight:700;color:#1A3A6B;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">How to use this report</div>
+    <p style="font-size:10pt;color:#444;margin-bottom:8px;">Each section covers a research question with findings and the approach I used. Scroll through or use the navigation to jump to specific sections.</p>
+    <p style="font-size:10pt;color:#444;margin-bottom:0;">Download dataset: <a href="https://github.com/Tommy-Nguyen-Stonera/python-home-furnishings-market/raw/main/marketing_sample_for_amazon_com-amazon_home_improvement_data__20200101_20200331__5k_data.ldjson" style="color:#1A3A6B;font-weight:600;text-decoration:underline;">amazon_home_improvement.ldjson</a></p>
 </div>
-
 
 <nav id="toc"><ul>
 <li data-section="overview">Overview</li>
@@ -81,7 +81,7 @@ p{margin:12px 0;font-size:15px}
 <div class="cover">
 <h1>Amazon Home Improvement Market Analysis</h1>
 <p class="subtitle">Pricing, Brands &amp; Marketplace Dynamics — 5,000 Products</p>
-<p class="meta">Tommy Nguyen &middot; Amazon India Q1 2020 &middot; Python &middot; Pandas &middot; Matplotlib</p>
+<p class="meta">Tommy Nguyen , Amazon India Q1 2020 , Python , Pandas , Matplotlib</p>
 </div>
 
 <div class="wrapper">
@@ -252,7 +252,7 @@ median_reviews = df_disc.<span class="fn">groupby</span>(<span class="str">"disc
 
 <div class="finding reveal">
 <div class="finding-label">The Pivot Moment</div>
-<p>I initially assumed a straightforward linear relationship: bigger discount equals more sales. The data partially confirmed this — up to a point. When I pushed the analysis past 60%, engagement plateaued. That made me rethink the question entirely. The issue is not "do discounts work?" but "where is the ceiling?" And the ceiling is lower than I expected. This changed the chart from a simple bar plot to a dual-panel view: the bar chart shows the pattern, and the scatter shows the noisy reality underneath. The scatter uses a log scale on the y-axis because review counts are heavily skewed — a detail I only caught after my first version produced a chart with 90% of the dots crushed into the bottom. Matplotlib's default linear scale was useless here.</p>
+<p>I initially assumed a straightforward linear relationship: bigger discount equals more sales. The data partially confirmed this — up to a point. When I pushed the analysis past 60%, engagement plateaued. That made me rethink the question entirely.</p>
 </div>
 
 <!-- Section 6 -->
@@ -318,7 +318,7 @@ non_prime_prices = df[~df[<span class="str">"is_prime"</span>]][<span class="str
 
 <div class="finding reveal">
 <div class="finding-label">What I Expected vs What I Found</div>
-<p>I assumed Prime = better experience = higher ratings. The opposite is true. Before concluding that non-Prime is "better quality," I had to consider whether the rating difference is driven by product mix rather than fulfilment type. Prime attracts lower-priced commodity items where buyers have low expectations. Non-Prime attracts specialist items where the buyer has already researched and committed. If non-Prime buyers are more intentional, their higher ratings may reflect better-matched expectations rather than better products. The lesson: segment-level averages can mislead if the segments contain fundamentally different product mixes.</p>
+<p>I assumed Prime = better experience = higher ratings. The opposite is true. Before concluding that non-Prime is "better quality," I had to consider whether the rating difference is driven by product mix rather than fulfilment type. Prime attracts lower-priced commodity items where buyers have low expectations.</p>
 </div>
 
 <!-- Section 8 -->
@@ -368,7 +368,7 @@ top10_pct = top_10_sellers.<span class="fn">sum</span>() / <span class="fn">len<
 
 <div class="finding reveal">
 <div class="finding-label">Honest Self-Critique</div>
-<p>Looking back, I should have explored the "best seller" tag more thoroughly — the dataset includes a best_seller flag that I mentioned but did not fully analyse. What separates best sellers from the rest? Is it price, rating, discount, brand, or some combination? That analysis would have been the most commercially actionable part of the report. I also should have attempted a time-series view. The data covers Q1 2020 — three months. Even a weekly price trend analysis could have revealed promotional cycles and seasonal patterns that the static snapshot misses. Finally, review sentiment analysis using NLP would add depth: review counts tell me engagement volume, but not whether customers are praising or complaining.</p>
+<p>Looking back, I should have explored the "best seller" tag more thoroughly — the dataset includes a best_seller flag that I mentioned but did not fully analyse. What separates best sellers from the rest? Is it price, rating, discount, brand, or some combination? That analysis would have been the most commercially actionable part of the report.</p>
 </div>
 
 <div class="finding reveal">
@@ -379,9 +379,8 @@ top10_pct = top_10_sellers.<span class="fn">sum</span>() / <span class="fn">len<
 </div>
 
 <div class="footer">
-<strong>Tommy Nguyen</strong> &middot; <a href="https://github.com/Tommy-Nguyen-Stonera">GitHub</a> &middot; <a href="https://tommy-nguyen-stonera.vercel.app">Portfolio</a><br>
-Data: Bright Data — Amazon Home Improvement Dataset (Q1 2020) &middot; Tools: Python, Pandas, Matplotlib, Seaborn, NumPy<br>
-AI Tools: AI coding assistants used for debugging and code suggestions. Analysis and interpretations are my own.
+<strong>Tommy Nguyen</strong> , <a href="https://github.com/Tommy-Nguyen-Stonera">GitHub</a> , <a href="https://tommy-nguyen-stonera.vercel.app">Portfolio</a><br>
+
 </div>
 
 <script>
@@ -393,8 +392,6 @@ const sections=Array.from(tocItems).map(li=>document.getElementById(li.dataset.s
 window.addEventListener('scroll',()=>{let current='';sections.forEach(s=>{if(s.getBoundingClientRect().top<=120)current=s.id});tocItems.forEach(li=>{li.classList.toggle('active',li.dataset.section===current)})});
 tocItems.forEach(li=>li.addEventListener('click',()=>{const el=document.getElementById(li.dataset.section);if(el)el.scrollIntoView({behavior:'smooth'})}));
 </script>
-
-
 
 </body>
 </html>
