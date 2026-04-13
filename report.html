@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amazon Home Improvement Market Analysis — Tommy Nguyen</title>
+<title>Amazon Home Improvement Market Analysis | Tommy Nguyen</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--navy:#1A3A6B;--gold:#E8A500;--light-blue:#F0F4FA;--light-gold:#FFD055;--cream:#FFFDF0;--dark:#252423;--code-bg:#1e2a3a;--code-text:#c9d1d9}
@@ -80,7 +80,7 @@ p{margin:12px 0;font-size:15px}
 
 <div class="cover">
 <h1>Amazon Home Improvement Market Analysis</h1>
-<p class="subtitle">Pricing, Brands &amp; Marketplace Dynamics — 5,000 Products</p>
+<p class="subtitle">Pricing, Brands &amp; Marketplace Dynamics: 5,000 Products</p>
 <p class="meta">Tommy Nguyen , Amazon India Q1 2020 , Python , Pandas , Matplotlib</p>
 </div>
 
@@ -113,9 +113,9 @@ p{margin:12px 0;font-size:15px}
 <span class="code-ref">analysis.py</span>
 </div>
 
-<p>A customer walking into my showroom has already checked prices online. They know the going rate. Understanding how online marketplaces structure pricing and promotions helps me have better conversations on the floor. I wanted to see the dynamics from the other side — what does the marketplace actually look like from a data perspective?</p>
+<p>A customer walking into my showroom has already checked prices online. They know the going rate. Understanding how online marketplaces structure pricing and promotions helps me have better conversations on the floor. I wanted to see the dynamics from the other side: what does the marketplace actually look like from a data perspective?</p>
 
-<p>The dataset covers Amazon India's Home Improvement category — hardware, tools, kitchen fittings, bathroom accessories. The kinds of products that sit in the same competitive space as what I sell in-store. While the prices are in INR and the brands skew Indian, the market dynamics — discount patterns, brand concentration, the Prime effect, seller fragmentation — mirror what I see in Australian retail every day.</p>
+<p>The dataset covers Amazon India's Home Improvement category: hardware, tools, kitchen fittings, bathroom accessories. The kinds of products that sit in the same competitive space as what I sell in-store. While the prices are in INR and the brands skew Indian, the market dynamics (discount patterns, brand concentration, the Prime effect, seller fragmentation) mirror what I see in Australian retail every day.</p>
 
 <div class="code-block">
 <span class="cm"># Load line-delimited JSON (~5K products)</span><br>
@@ -130,7 +130,7 @@ df = pd.<span class="fn">read_json</span>(<span class="str">"marketing_sample_..
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">How messy is real marketplace data, and what decisions did cleanup force me to make?</div>
-<span class="code-ref">analysis.py — Data Cleaning</span>
+<span class="code-ref">analysis.py - Data Cleaning</span>
 </div>
 
 <div class="code-block">
@@ -153,12 +153,12 @@ df[<span class="str">"discount_pct"</span>] = (<br>
 
 <div class="finding reveal">
 <div class="finding-label">Where I Got Stuck</div>
-<p>The category extraction was the most frustrating part. The <code>parent___child_category__all</code> column contained nested Python dictionaries with varying depth. My first approach — <code>df["category"].str.get("child")</code> — failed because the column contained actual dict objects, not JSON strings. Pandas' string accessor does not work on dicts. I had to write a custom function and use <code>.apply()</code>. The deeper issue was that the nesting was inconsistent: some products had three levels of categorisation, others had one. I ended up grabbing any key that was not "HomeImprovement" and using it as the subcategory. Imperfect, but functional for 145 categories.</p>
+<p>The category extraction was the most frustrating part. The <code>parent___child_category__all</code> column contained nested Python dictionaries with varying depth. My first approach, <code>df["category"].str.get("child")</code>, failed because the column contained actual dict objects, not JSON strings. Pandas' string accessor does not work on dicts. I had to write a custom function and use <code>.apply()</code>. The deeper issue was that the nesting was inconsistent: some products had three levels of categorisation, others had one. I ended up grabbing any key that was not "HomeImprovement" and using it as the subcategory. Imperfect, but functional for 145 categories.</p>
 </div>
 
 <div class="finding reveal">
 <div class="finding-label">Key Decision</div>
-<p>I kept products with missing discounts (they likely were not discounted) but excluded unrated products from the rating analysis. A product with zero ratings is fundamentally different from one rated 1 star. That decision affected the rating distribution — including zero-rating products would have pulled the average down and created a different story. Every cleaning decision is an analytical decision.</p>
+<p>I kept products with missing discounts (they likely were not discounted) but excluded unrated products from the rating analysis. A product with zero ratings is fundamentally different from one rated 1 star. That decision affected the rating distribution: including zero-rating products would have pulled the average down and created a different story. Every cleaning decision is an analytical decision.</p>
 </div>
 
 <!-- Section 3 -->
@@ -167,7 +167,7 @@ df[<span class="str">"discount_pct"</span>] = (<br>
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">How are products priced across sub-categories? Where are the premium vs value segments, and how wide is the spread?</div>
-<span class="code-ref">analysis.py — Chart 1</span>
+<span class="code-ref">analysis.py - Chart 1</span>
 </div>
 
 <div class="code-block">
@@ -179,11 +179,11 @@ df_top[<span class="str">"price_capped"</span>] = df_top[<span class="str">"sale
 sns.<span class="fn">boxplot</span>(data=df_top, y=<span class="str">"category"</span>, x=<span class="str">"price_capped"</span>, order=order)
 </div>
 
-<p>5,000 products span 145 sub-categories with a median price of INR 899 (roughly AUD $16). Price distributions are heavily right-skewed — most products cluster under INR 2,000, but outliers stretch above INR 50,000. This matches what I see in building materials: high-volume commodity items with a thin tail of specialist products.</p>
+<p>5,000 products span 145 sub-categories with a median price of INR 899 (roughly AUD $16). Price distributions are heavily right-skewed, with most products clustering under INR 2,000 but outliers stretching above INR 50,000. This matches what I see in building materials: high-volume commodity items with a thin tail of specialist products.</p>
 
 <div class="finding reveal">
 <div class="finding-label">Key Finding</div>
-<p>Categories like Power &amp; Hand Tools and Kitchen &amp; Bath Fixtures show the widest price spread, reflecting the spectrum from budget DIY to professional-grade. The width of the box tells me how much pricing flexibility exists in each category — tight clusters mean commodity, wide spreads mean segmentation opportunity.</p>
+<p>Categories like Power &amp; Hand Tools and Kitchen &amp; Bath Fixtures show the widest price spread, reflecting the spectrum from budget DIY to professional-grade. The width of the box tells me how much pricing flexibility exists in each category: tight clusters mean commodity, wide spreads mean segmentation opportunity.</p>
 </div>
 
 <!-- Section 4 -->
@@ -192,7 +192,7 @@ sns.<span class="fn">boxplot</span>(data=df_top, y=<span class="str">"category"<
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">Which brands dominate by volume, and do they maintain quality? Is market leadership earned through catalogue size or reputation?</div>
-<span class="code-ref">analysis.py — Chart 2</span>
+<span class="code-ref">analysis.py - Chart 2</span>
 </div>
 
 <div class="code-block">
@@ -206,7 +206,7 @@ ax2 = ax1.<span class="fn">twinx</span>()<br>
 ax2.<span class="fn">plot</span>(x, brand_stats[<span class="str">"avg_rating"</span>], marker=<span class="str">"o"</span>)
 </div>
 
-<p>The top brand by volume, uxcell, lists 168 products — but that is only 3.4% of the total catalogue. No single brand dominates. Quality leaders are different from volume leaders: Stanley and Taparia rate highest among the top 15 despite listing fewer products.</p>
+<p>The top brand by volume, uxcell, lists 168 products, which is only 3.4% of the total catalogue. No single brand dominates. Quality leaders are different from volume leaders: Stanley and Taparia rate highest among the top 15 despite listing fewer products.</p>
 
 <div class="stat-row reveal">
 <div class="stat"><div class="value">3.4%</div><div class="label">Top Brand Market Share</div></div>
@@ -216,12 +216,12 @@ ax2.<span class="fn">plot</span>(x, brand_stats[<span class="str">"avg_rating"</
 
 <div class="finding reveal">
 <div class="finding-label">Key Finding</div>
-<p>The market is incredibly fragmented. In physical retail, a few major brands command significant shelf space. Online, the "shelf" is infinite, so the barrier to listing is near zero. The long tail is enormous: hundreds of brands with fewer than 5 listings each. Volume does not guarantee reputation — Stanley and Taparia earn higher ratings with fewer products.</p>
+<p>The market is incredibly fragmented. In physical retail, a few major brands command significant shelf space. Online, the "shelf" is infinite, so the barrier to listing is near zero. The long tail is enormous: hundreds of brands with fewer than 5 listings each. Volume does not guarantee reputation: Stanley and Taparia earn higher ratings with fewer products.</p>
 </div>
 
 <div class="finding reveal">
 <div class="finding-label">What I Expected vs What I Found</div>
-<p>I expected big brands to dominate — like how Makita, Bosch, and DeWalt own the tool section in any physical store. Online, the top brand holds barely 3%. This was so different from physical retail that I had to ask why. The answer is structural: in a showroom, shelf space is finite, so each brand has real power. Online, the constraint is discoverability, not space. But fragmentation creates its own problem — for safety-critical categories like power tools, how does a buyer distinguish between a reputable brand and an unknown? Name recognition still matters for trust-dependent purchases.</p>
+<p>I expected big brands to dominate, like how Makita, Bosch, and DeWalt own the tool section in any physical store. Online, the top brand holds barely 3%. This was so different from physical retail that I had to ask why. The answer is structural: in a showroom, shelf space is finite, so each brand has real power. Online, the constraint is discoverability, not space. But fragmentation creates its own problem: for safety-critical categories like power tools, how does a buyer distinguish between a reputable brand and an unknown? Name recognition still matters for trust-dependent purchases.</p>
 </div>
 
 <!-- Section 5 -->
@@ -230,7 +230,7 @@ ax2.<span class="fn">plot</span>(x, brand_stats[<span class="str">"avg_rating"</
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">Do higher discounts drive more customer engagement? Is there a ceiling beyond which deeper discounts stop working?</div>
-<span class="code-ref">analysis.py — Chart 3</span>
+<span class="code-ref">analysis.py - Chart 3</span>
 </div>
 
 <div class="code-block">
@@ -243,16 +243,16 @@ df_disc[<span class="str">"discount_bin"</span>] = pd.<span class="fn">cut</span
 median_reviews = df_disc.<span class="fn">groupby</span>(<span class="str">"discount_bin"</span>, observed=<span class="kw">True</span>)[<span class="str">"reviews"</span>].<span class="fn">median</span>()
 </div>
 
-<p>The average discount is 42% — heavy discounting is standard, not exceptional. Products with 50%+ discounts attract 35% more reviews (median 23 vs 17 for lower discounts). But the relationship is not linear. Beyond roughly 60% off, engagement plateaus.</p>
+<p>The average discount is 42%, so heavy discounting is standard, not exceptional. Products with 50%+ discounts attract 35% more reviews (median 23 vs 17 for lower discounts). But the relationship is not linear. Beyond roughly 60% off, engagement plateaus.</p>
 
 <div class="finding reveal">
 <div class="finding-label">Key Finding</div>
-<p>Discounts work, but there is a ceiling. The 50–60% range is the sweet spot for driving engagement. Beyond 60%, buyers appear to question either the original price or the product quality. This aligns with what I see in-store: customers become suspicious of discounts that look too steep. The 42% average suggests "discount" is partly theatrical — similar to perpetual "sale" pricing in Australian retail.</p>
+<p>Discounts work, but there is a ceiling. The 50-60% range is the sweet spot for driving engagement. Beyond 60%, buyers appear to question either the original price or the product quality. This aligns with what I see in-store: customers become suspicious of discounts that look too steep. The 42% average suggests "discount" is partly theatrical, similar to perpetual "sale" pricing in Australian retail.</p>
 </div>
 
 <div class="finding reveal">
 <div class="finding-label">The Pivot Moment</div>
-<p>I initially assumed a straightforward linear relationship: bigger discount equals more sales. The data partially confirmed this — up to a point. When I pushed the analysis past 60%, engagement plateaued. That made me rethink the question entirely.</p>
+<p>I initially assumed a straightforward linear relationship: bigger discount equals more sales. The data partially confirmed this, up to a point. When I pushed the analysis past 60%, engagement plateaued. That made me rethink the question entirely.</p>
 </div>
 
 <!-- Section 6 -->
@@ -261,7 +261,7 @@ median_reviews = df_disc.<span class="fn">groupby</span>(<span class="str">"disc
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">What does the rating distribution look like across the marketplace? Which categories earn the highest customer trust?</div>
-<span class="code-ref">analysis.py — Chart 4</span>
+<span class="code-ref">analysis.py - Chart 4</span>
 </div>
 
 <div class="code-block">
@@ -272,11 +272,11 @@ cat_rating = df[df[<span class="str">"category"</span>].<span class="fn">isin</s
 &nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">groupby</span>(<span class="str">"category"</span>)[<span class="str">"rating"</span>].<span class="fn">mean</span>().<span class="fn">sort_values</span>()
 </div>
 
-<p>Average rating: 4.13 out of 5.0. The quality bar is high — low-rated products get buried by the algorithm quickly. The distribution is left-skewed: most products sit between 3.5 and 4.5. Anything below 3.0 is functionally invisible on the platform.</p>
+<p>Average rating: 4.13 out of 5.0. The quality bar is high, and low-rated products get buried by the algorithm quickly. The distribution is left-skewed: most products sit between 3.5 and 4.5. Anything below 3.0 is functionally invisible on the platform.</p>
 
 <div class="finding reveal">
 <div class="finding-label">Key Finding</div>
-<p>The rating floor is 3.5, not 3.0. Products below 3.5 stars are so rare in this dataset that they effectively do not exist in the marketplace. The algorithm and customer behaviour create a survival bias where only well-rated products remain visible. Safety &amp; Security and Kitchen &amp; Bath Fixtures rate highest, suggesting customers in these categories are more satisfied — or more selective about what they buy.</p>
+<p>The rating floor is 3.5, not 3.0. Products below 3.5 stars are so rare in this dataset that they effectively do not exist in the marketplace. The algorithm and customer behaviour create a survival bias where only well-rated products remain visible. Safety &amp; Security and Kitchen &amp; Bath Fixtures rate highest, suggesting customers in these categories are more satisfied, or more selective about what they buy.</p>
 </div>
 
 <div class="finding reveal">
@@ -290,7 +290,7 @@ cat_rating = df[df[<span class="str">"category"</span>].<span class="fn">isin</s
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">Do Prime (FBA) products perform differently on price or quality? What does the fulfilment choice tell us about seller strategy?</div>
-<span class="code-ref">analysis.py — Chart 5</span>
+<span class="code-ref">analysis.py - Chart 5</span>
 </div>
 
 <div class="code-block">
@@ -302,7 +302,7 @@ non_prime_prices = df[~df[<span class="str">"is_prime"</span>]][<span class="str
 <span class="cm"># Prime avg: INR 869 vs Non-Prime avg: INR 2,488</span>
 </div>
 
-<p>Prime products average INR 869 vs INR 2,488 for non-Prime — FBA sellers compete aggressively on price, consistent with a volume-driven strategy. Counterintuitively, non-Prime products rate slightly higher (4.18 vs 4.06).</p>
+<p>Prime products average INR 869 vs INR 2,488 for non-Prime. FBA sellers compete aggressively on price, consistent with a volume-driven strategy. Counterintuitively, non-Prime products rate slightly higher (4.18 vs 4.06).</p>
 
 <div class="stat-row reveal">
 <div class="stat"><div class="value">INR 869</div><div class="label">Prime Average Price</div></div>
@@ -327,7 +327,7 @@ non_prime_prices = df[~df[<span class="str">"is_prime"</span>]][<span class="str
 <div class="research-q">
 <div class="rq-label">Research Question</div>
 <div class="rq-text">How concentrated is seller ownership in this market? Is it controlled by a few large players, or is it open competition?</div>
-<span class="code-ref">analysis.py — Chart 6</span>
+<span class="code-ref">analysis.py - Chart 6</span>
 </div>
 
 <div class="code-block">
@@ -343,7 +343,7 @@ top10_pct = top_10_sellers.<span class="fn">sum</span>() / <span class="fn">len<
 
 <div class="finding reveal">
 <div class="finding-label">Key Finding</div>
-<p>At 15.8% concentration, this market is wide open. Compare that to physical retail where the top 3–4 distributors might control 60%+ of supply. Online marketplaces democratise access — but they also commoditise it. Competition is broad but shallow: many sellers with small catalogues rather than a few giants blocking entry.</p>
+<p>At 15.8% concentration, this market is wide open. Compare that to physical retail where the top 3-4 distributors might control 60%+ of supply. Online marketplaces democratise access, but they also commoditise it. Competition is broad but shallow: many sellers with small catalogues rather than a few giants blocking entry.</p>
 </div>
 
 <div class="finding reveal">
@@ -360,15 +360,15 @@ top10_pct = top_10_sellers.<span class="fn">sum</span>() / <span class="fn">len<
 <span class="code-ref">Retrospective</span>
 </div>
 
-<p><strong>The biggest Pandas challenge:</strong> The <code>.pipe()</code> method for chaining transformations was new to me. I started with a multi-line approach — <code>df["discount_percentage"].astype(str)</code>, then <code>.str.replace("%", "")</code>, then <code>pd.to_numeric()</code>. Chaining these with <code>.pipe()</code> was cleaner, but I initially got confused about which function signature <code>.pipe()</code> expects. The key insight: <code>.pipe(func, *args)</code> passes the Series as the first argument to <code>func</code>. Once I understood that, the cleanup code became a single readable chain instead of three separate assignments.</p>
+<p><strong>The biggest Pandas challenge:</strong> The <code>.pipe()</code> method for chaining transformations was new to me. I started with a multi-line approach: <code>df["discount_percentage"].astype(str)</code>, then <code>.str.replace("%", "")</code>, then <code>pd.to_numeric()</code>. Chaining these with <code>.pipe()</code> was cleaner, but I initially got confused about which function signature <code>.pipe()</code> expects. The key insight: <code>.pipe(func, *args)</code> passes the Series as the first argument to <code>func</code>. Once I understood that, the cleanup code became a single readable chain instead of three separate assignments.</p>
 
-<p><strong>Matplotlib's default colours made the charts unreadable.</strong> The default colour cycle worked fine for the first few charts, but the dual-axis brand chart (bars + line) needed manual colour selection. Using <code>sns.color_palette("muted")[0]</code> for bars and <code>[3]</code> for the line gave enough contrast. I also had to set <code>ylim(2.5, 5.2)</code> on the rating axis — without it, Matplotlib auto-scaled to the full 0–5 range, which compressed the actual variation into a narrow band at the top and made all brands look identical.</p>
+<p><strong>Matplotlib's default colours made the charts unreadable.</strong> The default colour cycle worked fine for the first few charts, but the dual-axis brand chart (bars + line) needed manual colour selection. Using <code>sns.color_palette("muted")[0]</code> for bars and <code>[3]</code> for the line gave enough contrast. I also had to set <code>ylim(2.5, 5.2)</code> on the rating axis. Without it, Matplotlib auto-scaled to the full 0-5 range, which compressed the actual variation into a narrow band at the top and made all brands look identical.</p>
 
-<p><strong>The scatter plot that nearly ruined my discount analysis:</strong> My first version of the discount-vs-reviews scatter had 4,000+ dots on a linear scale. It was an unreadable blob with a few outliers. I tried reducing alpha to 0.1, which helped but still hid the pattern. The real fix was switching to a log scale on the y-axis (<code>ax.set_yscale("log")</code>) and sampling 1,000 points (<code>df.sample(1000, random_state=42)</code>). The log scale spread out the compressed points, and sampling reduced overplotting. But I had to set <code>random_state</code> to make the chart reproducible — without it, every run produced a different-looking scatter, which made debugging impossible.</p>
+<p><strong>The scatter plot that nearly ruined my discount analysis:</strong> My first version of the discount-vs-reviews scatter had 4,000+ dots on a linear scale. It was an unreadable blob with a few outliers. I tried reducing alpha to 0.1, which helped but still hid the pattern. The real fix was switching to a log scale on the y-axis (<code>ax.set_yscale("log")</code>) and sampling 1,000 points (<code>df.sample(1000, random_state=42)</code>). The log scale spread out the compressed points, and sampling reduced overplotting. But I had to set <code>random_state</code> to make the chart reproducible. Without it, every run produced a different-looking scatter, which made debugging impossible.</p>
 
 <div class="finding reveal">
 <div class="finding-label">Honest Self-Critique</div>
-<p>Looking back, I should have explored the "best seller" tag more thoroughly — the dataset includes a best_seller flag that I mentioned but did not fully analyse. What separates best sellers from the rest? Is it price, rating, discount, brand, or some combination? That analysis would have been the most commercially actionable part of the report.</p>
+<p>Looking back, I should have explored the "best seller" tag more thoroughly. The dataset includes a best_seller flag that I noted but did not fully analyse. What separates best sellers from the rest? Is it price, rating, discount, brand, or some combination? That analysis would have been the most commercially actionable part of the report.</p>
 </div>
 
 <div class="finding reveal">

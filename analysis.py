@@ -14,7 +14,7 @@ import seaborn as sns
 import numpy as np
 import os
 
-# ── Configuration ────────────────────────────────────────────────────────────
+# --- Configuration ---
 plt.style.use("seaborn-v0_8-whitegrid")
 sns.set_palette("muted")
 VISUALS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "visuals")
@@ -28,7 +28,7 @@ DATA_FILE = os.path.join(
 )
 
 
-# ── 1. Load & Clean Data ────────────────────────────────────────────────────
+# --- 1. Load & Clean Data ---
 print("Loading data...")
 df = pd.read_json(DATA_FILE, lines=True)
 print(f"Raw dataset: {df.shape[0]:,} products, {df.shape[1]} columns\n")
@@ -74,7 +74,7 @@ print(f"  Prime products:  {df['is_prime'].sum():,}")
 print(f"  Categories:      {df['category'].nunique()}\n")
 
 
-# ── 2. Price Distribution Across Categories ─────────────────────────────────
+# --- 2. Price Distribution Across Categories ---
 print("Generating price distribution chart...")
 
 # Focus on top 12 categories by product count for readability
@@ -101,7 +101,7 @@ fig.savefig(os.path.join(VISUALS_DIR, "01_price_by_category.png"), dpi=DPI)
 plt.close()
 
 
-# ── 3. Top Brands — Product Count & Average Rating ──────────────────────────
+# --- 3. Top Brands: Product Count & Average Rating ---
 print("Generating brand analysis chart...")
 
 brand_stats = (
@@ -137,7 +137,7 @@ fig.savefig(os.path.join(VISUALS_DIR, "02_top_brands.png"), dpi=DPI)
 plt.close()
 
 
-# ── 4. Discount vs Reviews — Do Bigger Discounts Drive Engagement? ──────────
+# --- 4. Discount vs Reviews: Do Bigger Discounts Drive Engagement? ---
 print("Generating discount vs reviews chart...")
 
 df_disc = df.dropna(subset=["discount_pct", "reviews"]).copy()
@@ -173,7 +173,7 @@ fig.savefig(os.path.join(VISUALS_DIR, "03_discount_vs_reviews.png"), dpi=DPI)
 plt.close()
 
 
-# ── 5. Rating Distribution + Avg Rating by Category ─────────────────────────
+# --- 5. Rating Distribution + Avg Rating by Category ---
 print("Generating rating analysis chart...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
@@ -204,7 +204,7 @@ fig.savefig(os.path.join(VISUALS_DIR, "04_rating_analysis.png"), dpi=DPI)
 plt.close()
 
 
-# ── 6. Prime vs Non-Prime Comparison ────────────────────────────────────────
+# --- 6. Prime vs Non-Prime Comparison ---
 print("Generating Prime comparison chart...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
@@ -245,7 +245,7 @@ fig.savefig(os.path.join(VISUALS_DIR, "05_prime_comparison.png"), dpi=DPI)
 plt.close()
 
 
-# ── 7. Seller Concentration — Who Controls the Market? ──────────────────────
+# --- 7. Seller Concentration: Who Controls the Market? ---
 print("Generating seller concentration chart...")
 
 seller_counts = df["seller_name"].value_counts()
@@ -277,13 +277,13 @@ fig.savefig(os.path.join(VISUALS_DIR, "06_seller_concentration.png"), dpi=DPI)
 plt.close()
 
 
-# ── 8. Print Key Findings Summary ───────────────────────────────────────────
+# --- 8. Print Key Findings Summary ---
 print("\n" + "=" * 60)
 print("KEY FINDINGS SUMMARY")
 print("=" * 60)
 
 print(f"\nDataset: {len(df):,} products across {df['category'].nunique()} categories")
-print(f"Price range: INR {df['sales_price'].min():,.0f} – {df['sales_price'].max():,.0f}")
+print(f"Price range: INR {df['sales_price'].min():,.0f} to {df['sales_price'].max():,.0f}")
 print(f"Median price: INR {df['sales_price'].median():,.0f}")
 print(f"Average rating: {df['rating'].mean():.2f} / 5.0")
 print(f"Average discount: {df['discount_pct'].mean():.1f}%")
